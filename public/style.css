@@ -1,6 +1,10 @@
 body{
     margin-top: 75px;
 }
+.thumb-img{
+    width: 80px;
+    height: 80px;
+}
 #grid-container{
     position: relative;
     display: inline-flex;
