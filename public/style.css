@@ -1,0 +1,35 @@
+body{
+    margin-top: 75px;
+}
+.radio-box{
+    background: #ccc;
+    padding: 20px;
+    margin: 10px;
+}
+
+
+ul.flex-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+ul.flex-container li{
+    flex-grow: 0;
+    height: 80px;
+    color: #000;
+    font-weight: bold;
+    font-size: 2.2em;
+    text-align: center;
+    width: 80px;
+    border: 1px solid #000000;
+}
+
+ul li:first-child{background: #c2d775;}
+ul li:nth-child(2){background: #007278;}
+ul li:nth-child(3){background: #c7b600;}
+ul li:nth-child(4){background: #a90077;}
+ul li:nth-child(5){background: #00a378;}
+ul li:last-child{background: #00ea72;}
