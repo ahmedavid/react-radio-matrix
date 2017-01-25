@@ -26,7 +26,9 @@ class App extends Component{
                     else if(a === false){
                         return(
                             <li key={i*11.1134+4546}>
-                                <input type="radio" name="name"/>
+                                <div className="center-item">
+                                    <input type="radio" name="name"/>
+                                </div>
                             </li>
                         );
                     }
@@ -43,13 +45,12 @@ class App extends Component{
         console.log("STATE:",this.state)
 
         return(
-            <div>
+            <div id="grid-container">
                 <form onSubmit={(e)=>e.preventDefault()}>
                     {this.renderList()}
                 </form>
-                <br/>
-                <button onClick={this.onAddRow.bind(this)}>Add Row</button>
-                <button onClick={this.onAddColumn.bind(this)}>Add Column</button>
+                <button onClick={this.onAddRow.bind(this)} className="add-row"><span className="glyphicon glyphicon-plus"/></button>
+                <button onClick={this.onAddColumn.bind(this)} className="add-col"><span className="glyphicon glyphicon-plus"/></button>
             </div>
         );
     }

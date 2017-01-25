@@ -24,9 +24,9 @@ export default class EditableListItem extends Component{
     }
     renderListItem(){
         if(this.state.isEditing){
-            return <input type="text" className="tiny-input" onKeyPress={this.handleKeyPress.bind(this)} onBlur={this.handleBlur.bind(this)} autoFocus/>
+            return <input type="text" className="tiny-input center-item" onKeyPress={this.handleKeyPress.bind(this)} onBlur={this.handleBlur.bind(this)} autoFocus defaultValue={this.state.alias}/>
         }
-        return <div onClick={this.onEdit.bind(this)}>{this.state.alias}</div>
+        return <div onClick={this.onEdit.bind(this)} className="center-item">{this.state.alias}</div>
     }
     render(){
         return(

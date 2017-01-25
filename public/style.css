@@ -1,10 +1,35 @@
 body{
     margin-top: 75px;
 }
+#grid-container{
+    position: relative;
+    display: inline-flex;
+    flex-wrap: wrap;
+    padding-right: 50px;
+    padding-bottom: 50px;
+}
+.add-row{
+    position: absolute;
+    bottom:0;
+    left:25px;
+    color: #00a378;
+    font-size: 24px;
+    border: none;
+    background: none;
+}
+.add-col{
+    position: absolute;
+    top: 25px;
+    right: 0;
+    color: #00a378;
+    font-size: 24px;
+    border: none;
+    background: none;
+}
 .tiny-input{
-    width: 50px;
-    height: 20px;
-    font-size: 12px;
+    width: 70px;
+    height: 30px;
+    font-size: 24px;
 }
 .radio-box{
     background: #ccc;
@@ -22,19 +47,15 @@ ul.flex-container{
     padding: 0;
 }
 ul.flex-container li{
+    display: flex;
     flex-grow: 0;
     height: 80px;
     color: #000;
-    font-weight: bold;
     font-size: 2.2em;
+    font-style: italic;
     text-align: center;
     width: 80px;
-    border: 1px solid #000000;
 }
-
-ul li:first-child{background: #c2d775;}
-ul li:nth-child(2){background: #007278;}
-ul li:nth-child(3){background: #c7b600;}
-ul li:nth-child(4){background: #a90077;}
-ul li:nth-child(5){background: #00a378;}
-ul li:last-child{background: #00ea72;}
+.center-item{
+    margin: auto;
+}
