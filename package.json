@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "startDev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --open"
+    "startDev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --open",
     "start":"node server.js"
   },
   "repository": {

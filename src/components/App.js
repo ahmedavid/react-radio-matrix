@@ -1,4 +1,5 @@
 import React , {Component} from 'react';
+import EditableListItem from './EditableListItem';
 
 class App extends Component{
     constructor(){
@@ -17,23 +18,35 @@ class App extends Component{
             myArr:this.create2DArray(rows,cols)
         });
     }
-
     renderList(){
-        return this.state.myArr.map(arr=>{
-            return <ul className="flex-container" key={arr[0]}>
-                {arr.map(a=>{
-                    return <li key={a}>{a}</li>
+        return this.state.myArr.map((arr,i)=>{
+            return <ul className="flex-container" key={i*234324+333}>
+                {arr.map((a,i)=>{
+                    if(a === "") return <li key={i*Math.PI}></li>
+                    else if(a === false){
+                        return(
+                            <li key={i*11.1134+4546}>
+                                <input type="radio" name="name"/>
+                            </li>
+                        );
+                    }
+                    else{
+                        return (
+                            <EditableListItem key={a.name} listItem={a}/>
+                        );
+                    }
                 })}
             </ul>
         })
     }
     render(){
+        console.log("STATE:",this.state)
+
         return(
             <div>
-                PROFILE
-                <br/>
-                {this.renderList()}
-
+                <form onSubmit={(e)=>e.preventDefault()}>
+                    {this.renderList()}
+                </form>
                 <br/>
                 <button onClick={this.onAddRow.bind(this)}>Add Row</button>
                 <button onClick={this.onAddColumn.bind(this)}>Add Column</button>
@@ -50,13 +63,19 @@ class App extends Component{
                     a[i][j] = "";
                 }
                 else if(j==0){
-                    a[i][j] = "row"+i;
+                    a[i][j] = {
+                        name:"row"+i,
+                        alias:"row"+i
+                    };
                 }
                 else if(i==0){
-                    a[i][j] = "col"+j;
+                    a[i][j] = {
+                        name:"col"+j,
+                        alias:"col"+j
+                    };
                 }
                 else {
-                    a[i][j] = "[" + i + "," + j + "]";
+                    a[i][j] = false;
                 }
             }
         }
@@ -80,9 +99,6 @@ class App extends Component{
             cols:cols+1
         })
     }
-}
-function mapStateToProps(state) {
-    return {};
 }
 
 export default App;

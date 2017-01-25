@@ -1,6 +1,11 @@
 body{
     margin-top: 75px;
 }
+.tiny-input{
+    width: 50px;
+    height: 20px;
+    font-size: 12px;
+}
 .radio-box{
     background: #ccc;
     padding: 20px;
