@@ -1,5 +1,6 @@
 import React , {Component} from 'react';
 import EditableListItem from './EditableListItem';
+import ImageBox from './ImageBox';
 
 class App extends Component{
     constructor(){
@@ -38,7 +39,7 @@ class App extends Component{
                         return (
                             <li key={i*12.1134+546}>
                                 <div className="center-item">
-                                    <img src="/images/hamster.jpg" className="thumb-img"/>
+                                    <ImageBox/>
                                 </div>
                             </li>
                         );

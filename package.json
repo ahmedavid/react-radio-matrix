@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "startDev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --open",
-    "start":"node server.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
     "express": "^4.14.0",
     "lodash": "^4.17.4",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "react-dropzone": "^3.9.2"
   }
 }
