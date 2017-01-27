@@ -10,8 +10,8 @@ class App extends Component{
         super(props);
 
         this.state = {
-            longest:0,
-            shortest:0,
+            longestRow:0,
+            longestCol:0,
             numImg:0,
             rows:5,
             cols:5,
@@ -20,10 +20,10 @@ class App extends Component{
     }
 
     componentWillMount(){
-        const {big,small} = this.findLongestAndShortest();
+        const {longestRow,longestCol} = this.findLongest();
         this.setState({
-            longest:big.alias.length,
-            shortest:small.alias.length
+            longestRow:longestRow.length,
+            longestCol:longestCol.length
         })
     }
     handleEdit(id,al){
@@ -37,21 +37,18 @@ class App extends Component{
             })
         }));
 
-        //debugger;
-
         this.setState({
             myArr:temp
         });
 
-        const {big,small} = this.findLongestAndShortest();
+        const {longestRow,longestCol} = this.findLongest();
         this.setState({
-            longest:big.alias.length,
-            shortest:small.alias.length
-        });
+            longestRow:longestRow.length,
+            longestCol:longestCol.length
+        })
 
     }
     handleUpload(id){
-        console.log('Uploaded on img box id :',id)
         const temp = this.state.myArr.map((arr => {
             return arr.map(a=>{
                 if(a.name === "imagebox" && a.id === id){
@@ -142,8 +139,8 @@ class App extends Component{
                         <li>Number of rows : {this.state.rows-2}</li>
                         <li>Number of cols : {this.state.cols-2}</li>
                         <li>Number of images : {this.state.numImg}</li>
-                        <li>Longest label : {this.state.longest}</li>
-                        <li>Shortest label : {this.state.shortest}</li>
+                        <li>Longest Row : {this.state.longestRow}</li>
+                        <li>Longest Col : {this.state.longestCol}</li>
                     </ul>
                 </div>
             </div>
@@ -152,25 +149,35 @@ class App extends Component{
 
 
 
-    findLongestAndShortest(){
+    findLongest(){
         const myArr = this.state.myArr;
-        const big = myArr.reduce(function(prev,curr){
-            return curr.reduce(function(p,c){
-                if(c.name==="label" && p.name=="label" && c.alias.length>p.alias.length) return c
-                else if(p.name !== "label") return c
-                else return p
-            },prev);
-        },myArr[0][0])
 
-        const small = myArr.reduce(function(prev,curr){
-            return curr.reduce(function(p,c){
-                if(c.name==="label" && p.name==="label" && c.alias.length<p.alias.length) return c
-                else if(p.name !== "label") return c
-                else return p
-            },prev);
-        },myArr[0][0])
+        const rowRegex = /^row/;
+        const colRegex = /^col/;
 
-        return {big:big,small:small}
+
+        var rowArray =[];
+        myArr.reduce(function (prev, curr) {
+            curr.reduce(function (p, c) {
+                if(c.name === "label" && rowRegex.test(c.id)){
+                    rowArray.push(c.alias);
+                }
+            },prev)
+        },myArr[0][0]);
+        var longestRow = rowArray.reduce(function (a, b) { return a.length > b.length ? a : b; });
+
+        var colArray =[];
+        myArr.reduce(function (prev, curr) {
+            curr.reduce(function (p, c) {
+                if(c.name === "label" && colRegex.test(c.id)){
+                    colArray.push(c.alias);
+                }
+            },prev)
+        },myArr[0][0]);
+        var longestCol = colArray.reduce(function (a, b) { return a.length > b.length ? a : b; });
+
+        return{longestRow,longestCol}
+
     }
 
     onAddRow(){
