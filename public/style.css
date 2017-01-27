@@ -63,3 +63,29 @@ ul.flex-container li{
 .center-item{
     margin: auto;
 }
+.left-border{
+    border-left: 1px solid #ccc;
+    min-height: 500px;
+}
+
+
+/*ANIMATIONS*/
+.fade-enter{
+    opacity: 0;
+}
+
+.fade-enter-active{
+    opacity: 1;
+    transition: .5s ease-in all;
+}
+
+.fade-leave{
+    opacity: 1;
+    transform: scale(1,1);
+}
+
+.fade-leave-active{
+    opacity: 0;
+    transform: scale(0.7,0.7);
+    transition: .2s ease-out all;
+}

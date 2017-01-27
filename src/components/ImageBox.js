@@ -10,7 +10,7 @@ class ImageBox extends Component {
     }
     render() {
         return (
-            <div>
+            <div className="imagebox">
                 {
                     this.state.files
                         ? <div><div>{this.state.files.map((file,i) => <img width={50} key={i} src={file.preview} />)}</div></div>
@@ -26,6 +26,7 @@ class ImageBox extends Component {
         this.setState({
             files: files
         });
+        this.props.onUpload(this.props.listItem.id);
     }
 }
 

@@ -10,8 +10,11 @@ export default class EditableListItem extends Component{
     }
     handleKeyPress(e){
         if(e.key === 'Enter'){
-            console.log('ALIAS CHANGED:',e.target.value)
-            this.setState({isEditing:false,alias:e.target.value});
+            if(e.target.value.length > 0){
+                this.setState({alias:e.target.value});
+                this.props.onEdit(this.props.listItem.id,e.target.value)
+            }
+            this.setState({isEditing:false});
         }
     }
     handleBlur(){
@@ -26,7 +29,7 @@ export default class EditableListItem extends Component{
         if(this.state.isEditing){
             return <input type="text" className="tiny-input center-item" onKeyPress={this.handleKeyPress.bind(this)} onBlur={this.handleBlur.bind(this)} autoFocus defaultValue={this.state.alias}/>
         }
-        return <div onClick={this.onEdit.bind(this)} className="center-item">{this.state.alias}</div>
+        return <div onDoubleClick={this.onEdit.bind(this)} className="center-item">{this.state.alias}</div>
     }
     render(){
         return(
