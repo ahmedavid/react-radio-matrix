@@ -3,81 +3,40 @@ export const create2DArray = (rows,cols) =>{
     for (var i = 0; i < rows; i++) {
         a[i] = new Array(cols);
         for (var j = 0; j < cols; j++) {
-            if(i==0 && j==0 ){
+            if((i==0 && j==0) || (i==1 && j==1) || (i==2 && j==2) || (i==0 && j==1) || (i==1 && j==0) || (i==2 && j==0) || (i==2 && j==1) || (i==1 && j==2) || (i==0 && j==2)){
                 a[i][j] = {
-                    name:"emptycell"
+                    name:"emptycell",
+                    key:i+""+j
                 };
             }
-            else if(i==1 && j==1){
-                a[i][j] = {
-                    name:"emptycell"
-                };
-            }
-            else if(i==2 && j==2){
-                a[i][j] = {
-                    name:"emptycell"
-                };
-            }
-            else if(i==0 && j==1){
-                a[i][j] = {
-                    name:"emptycell"
-                };
-            }
-            else if(i==1 && j==0){
-                a[i][j] = {
-                    name:"emptycell"
-                };
-            }
-            else if(i==2 && j==0){
-                a[i][j] = {
-                    name:"emptycell"
-                };
-            }
-            else if(i==2 && j==1){
-                a[i][j] = {
-                    name:"emptycell"
-                };
-            }
-            else if(i==1 && j==2){
-                a[i][j] = {
-                    name:"emptycell"
-                };
-            }
-            else if(i==0 && j==2){
-                a[i][j] = {
-                    name:"emptycell"
-                };
-            }
-            else if(i==1){
+            else if(i==1 || j==1){
                 a[i][j] = {
                     name:"imagebox",
-                    id:parseInt(i+""+j),
-                    imageSet:false
-                };
-            }
-            else if(j==1){
-                a[i][j] = {
-                    name:"imagebox",
-                    id:parseInt(i+""+j),
-                    imageSet:false
+                    id:i+""+j,
+                    key:i+""+j,
+                    imageSet:false,
+                    file:null
                 };
             }
             else if(i==0){
                 a[i][j] = {
                     name:"remove",
-                    id:'col'+(j-2)
+                    id:'col'+(j-2),
+                    key:i+""+j
                 };
             }
             else if(j==0){
                 a[i][j] = {
                     name:"remove",
-                    id:'row'+(i-2)
+                    id:'row'+(i-2),
+                    key:i+""+j
                 };
             }
             else if(j==2){
                 a[i][j] = {
                     name:"label",
                     id:"row"+(i-2),
+                    key:i+""+j,
                     alias:"row"+(i-2)
                 };
             }
@@ -85,12 +44,14 @@ export const create2DArray = (rows,cols) =>{
                 a[i][j] = {
                     name:"label",
                     id:"col"+(j-2),
+                    key:i+""+j,
                     alias:"col"+(j-2)
                 };
             }
             else {
                 a[i][j] = {
-                    name:"radio"
+                    name:"radio",
+                    key:i+""+j
                 };
             }
         }
@@ -125,26 +86,31 @@ export const createRow = (that) => {
         if(i===0) {
             tempArr.push( {
                     name:"remove",
-                    id:'row'+(rowHistory-2)
+                    id:'row'+(rowHistory-2),
+                    key:rowHistory+""+i,
             });
         }
         else if(i===1) {
             tempArr.push( {
                 name:"imagebox",
-                id:parseInt((rowHistory-2)+""+colHistory),
-                imageSet:false
+                id:parseInt((rowHistory)+""+1),
+                key:rowHistory+""+i,
+                imageSet:false,
+                file:null
             });
         }
         else if(i===2) {
             tempArr.push( {
                 name:"label",
                 id:"row"+(rowHistory-2),
+                key:rowHistory+""+i,
                 alias:"row"+(rowHistory-2)
             });
         }
         else {
             tempArr.push({
-                name:"radio"
+                name:"radio",
+                key:rowHistory+""+i
             });
         }
     }
@@ -159,26 +125,31 @@ export const createCol = (that) => {
         if(i===0) {
             myArr[i].push( {
                 name:"remove",
-                id:'col'+(colHistory-2)
+                id:'col'+(colHistory-2),
+                key:i+""+colHistory,
             });
         }
         else if(i===1) {
             myArr[i].push( {
                 name:"imagebox",
                 id:parseInt((rowHistory)+""+(colHistory-2)),
-                imageSet:false
+                key:i+""+colHistory,
+                imageSet:false,
+                file:null
             });
         }
         else if(i===2) {
             myArr[i].push( {
                 name:"label",
                 id:"col"+(colHistory-2),
+                key:i+""+colHistory,
                 alias:"col"+(colHistory-2)
             });
         }
         else {
             myArr[i].push({
-                name:"radio"
+                name:"radio",
+                key:i+""+colHistory,
             });
         }
     }

@@ -116,11 +116,12 @@ class App extends Component{
         })
 
     }
-    handleUpload(id){
+    handleUpload(id,file){
         const temp = this.state.myArr.map((arr => {
             return arr.map(a=>{
                 if(a.name === "imagebox" && a.id === id){
                     a.imageSet = true;
+                    a.file = file;
                     return a;
                 }
                 return a
@@ -151,11 +152,11 @@ class App extends Component{
             return <ul className="flex-container" key={i*234324+333}>
                 {arr.map((a,i)=>{
                     if(a.name === "emptycell"){
-                        return <li key={i*Math.PI}></li>;
+                        return <li key={a.key}></li>;
                     }
                     else if(a.name === "radio"){
                         return(
-                            <li key={i*11.1134+4546}>
+                            <li key={a.key}>
                                 <div className="center-item">
                                     <input type="radio" name="name"/>
                                 </div>
@@ -164,7 +165,7 @@ class App extends Component{
                     }
                     else if(a.name === "imagebox"){
                         return (
-                            <li key={i*12.1134+546}>
+                            <li key={a.key}>
                                 <div className="center-item">
                                     <ImageBox listItem={a} onUpload={this.handleUpload.bind(this)}/>
                                 </div>
@@ -173,7 +174,7 @@ class App extends Component{
                     }
                     else if(a.name === "remove"){
                         return (
-                            <li key={i*12.14+46}>
+                            <li key={a.key}>
                                 <span className="center-item glyphicon glyphicon-remove remove-btn" onClick={this.removeRowCol.bind(this,a.id)}>
                                 </span>
                             </li>
@@ -181,7 +182,7 @@ class App extends Component{
                     }
                     else{
                         return (
-                            <EditableListItem key={a.id} listItem={a} onEdit={this.handleEdit.bind(this)}/>
+                            <EditableListItem key={a.key} listItem={a} onEdit={this.handleEdit.bind(this)}/>
                         );
                     }
                 })}

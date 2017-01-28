@@ -5,16 +5,23 @@ class ImageBox extends Component {
     constructor(props){
         super(props);
         this.state = {
-            files:null
+            file:null
+        }
+    }
+    componentWillMount(){
+        if(this.props.listItem.file !== null){
+            this.setState({
+                file:this.props.listItem.file
+            });
         }
     }
     render() {
         return (
             <div className="imagebox">
                 {
-                    this.state.files
-                        ? <div><div>{this.state.files.map((file,i) => <img width={50} key={i} src={file.preview} />)}</div></div>
-                        : <Dropzone className="dropzonne" onDrop={this.onDrop.bind(this)}>
+                    this.state.file
+                        ? <div><div><img width={50} src={this.state.file.preview} /></div></div>
+                        : <Dropzone className="dropzonne" onDrop={this.onDrop.bind(this)} accept="image/*" multiple={false}>
                             <span className="glyphicon glyphicon-plus add-img-btn"></span>
                           </Dropzone>
                 }
@@ -24,9 +31,11 @@ class ImageBox extends Component {
     }
     onDrop(files){
         this.setState({
-            files: files
+            file: files[0]
+        },function () {
+            this.props.onUpload(this.props.listItem.id,this.state.file);
         });
-        this.props.onUpload(this.props.listItem.id);
+
     }
 }
 
