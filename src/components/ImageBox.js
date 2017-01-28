@@ -15,7 +15,7 @@ class ImageBox extends Component {
                     this.state.files
                         ? <div><div>{this.state.files.map((file,i) => <img width={50} key={i} src={file.preview} />)}</div></div>
                         : <Dropzone className="dropzonne" onDrop={this.onDrop.bind(this)}>
-                            <div>+</div>
+                            <span className="glyphicon glyphicon-plus add-img-btn"></span>
                           </Dropzone>
                 }
 

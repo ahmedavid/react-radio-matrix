@@ -67,7 +67,22 @@ ul.flex-container li{
     border-left: 1px solid #ccc;
     min-height: 500px;
 }
+.remove-btn{
+    font-size: 18px;
+}
+.remove-btn:hover{
+    cursor: pointer;
+    color: crimson;
+}
 
+
+.add-img-btn{
+    font-size: 24px;
+}
+.add-img-btn:hover{
+    cursor: pointer;
+    color: cornflowerblue;
+}
 
 /*ANIMATIONS*/
 .fade-enter{

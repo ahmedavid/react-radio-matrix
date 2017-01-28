@@ -13,6 +13,11 @@ export const create2DArray = (rows,cols) =>{
                     name:"emptycell"
                 };
             }
+            else if(i==2 && j==2){
+                a[i][j] = {
+                    name:"emptycell"
+                };
+            }
             else if(i==0 && j==1){
                 a[i][j] = {
                     name:"emptycell"
@@ -23,14 +28,27 @@ export const create2DArray = (rows,cols) =>{
                     name:"emptycell"
                 };
             }
-            else if(i==0){
+            else if(i==2 && j==0){
                 a[i][j] = {
-                    name:"imagebox",
-                    id:parseInt(i+""+j),
-                    imageSet:false
+                    name:"emptycell"
                 };
             }
-            else if(j==0){
+            else if(i==2 && j==1){
+                a[i][j] = {
+                    name:"emptycell"
+                };
+            }
+            else if(i==1 && j==2){
+                a[i][j] = {
+                    name:"emptycell"
+                };
+            }
+            else if(i==0 && j==2){
+                a[i][j] = {
+                    name:"emptycell"
+                };
+            }
+            else if(i==1){
                 a[i][j] = {
                     name:"imagebox",
                     id:parseInt(i+""+j),
@@ -39,16 +57,35 @@ export const create2DArray = (rows,cols) =>{
             }
             else if(j==1){
                 a[i][j] = {
-                    name:"label",
-                    id:"row"+(i-1),
-                    alias:"row"+(i-1)
+                    name:"imagebox",
+                    id:parseInt(i+""+j),
+                    imageSet:false
                 };
             }
-            else if(i==1){
+            else if(i==0){
+                a[i][j] = {
+                    name:"remove",
+                    id:'col'+(j-2)
+                };
+            }
+            else if(j==0){
+                a[i][j] = {
+                    name:"remove",
+                    id:'row'+(i-2)
+                };
+            }
+            else if(j==2){
                 a[i][j] = {
                     name:"label",
-                    id:"col"+(j-1),
-                    alias:"col"+(j-1)
+                    id:"row"+(i-2),
+                    alias:"row"+(i-2)
+                };
+            }
+            else if(i==2){
+                a[i][j] = {
+                    name:"label",
+                    id:"col"+(j-2),
+                    alias:"col"+(j-2)
                 };
             }
             else {
@@ -79,4 +116,72 @@ export const copyArr = (oldArr,newArr,that) => {
     }
 
     return newArr;
+};
+
+export const createRow = (that) => {
+    const {myArr,rowHistory,colHistory} = that.state;
+    var tempArr = [];
+    for(var i=0;i<myArr[0].length;i++){
+        if(i===0) {
+            tempArr.push( {
+                    name:"remove",
+                    id:'row'+(rowHistory-2)
+            });
+        }
+        else if(i===1) {
+            tempArr.push( {
+                name:"imagebox",
+                id:parseInt((rowHistory-2)+""+colHistory),
+                imageSet:false
+            });
+        }
+        else if(i===2) {
+            tempArr.push( {
+                name:"label",
+                id:"row"+(rowHistory-2),
+                alias:"row"+(rowHistory-2)
+            });
+        }
+        else {
+            tempArr.push({
+                name:"radio"
+            });
+        }
+    }
+
+    return tempArr
+};
+
+export const createCol = (that) => {
+    const {myArr,rowHistory,colHistory} = that.state;
+
+    for(var i=0;i<myArr.length;i++){
+        if(i===0) {
+            myArr[i].push( {
+                name:"remove",
+                id:'col'+(colHistory-2)
+            });
+        }
+        else if(i===1) {
+            myArr[i].push( {
+                name:"imagebox",
+                id:parseInt((rowHistory)+""+(colHistory-2)),
+                imageSet:false
+            });
+        }
+        else if(i===2) {
+            myArr[i].push( {
+                name:"label",
+                id:"col"+(colHistory-2),
+                alias:"col"+(colHistory-2)
+            });
+        }
+        else {
+            myArr[i].push({
+                name:"radio"
+            });
+        }
+    }
+
+    return myArr;
 };

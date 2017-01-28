@@ -2,7 +2,7 @@ import React , {Component} from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import EditableListItem from './EditableListItem';
 import ImageBox from './ImageBox';
-import {create2DArray,copyArr} from '../helpers';
+import {create2DArray,createRow,createCol,copyArr} from '../helpers';
 
 
 class App extends Component{
@@ -13,9 +13,11 @@ class App extends Component{
             longestRow:0,
             longestCol:0,
             numImg:0,
-            rows:5,
-            cols:5,
-            myArr:create2DArray(5,5)
+            rowHistory:6,
+            colHistory:6,
+            rows:6,
+            cols:6,
+            myArr:create2DArray(6,6)
         };
     }
 
@@ -25,6 +27,72 @@ class App extends Component{
             longestRow:longestRow.length,
             longestCol:longestCol.length
         })
+    }
+    removeRowCol(id){
+        const rowRegex = /^row/;
+        const colRegex = /^col/;
+
+        console.log("Remove Clicked id:",id)
+        const myArr = this.state.myArr;
+
+        if(rowRegex.test(id)){
+            let index = -1;
+            for(let i=0;i<myArr.length;i++){
+                if(index !== -1) break;
+                for(let j=0;j<myArr[0].length;j++){
+                    if(myArr[i][j].name === "label" && myArr[i][j].id===id){
+                        index = i;
+                        break;
+                    }
+                }
+            }
+            if(index > 0  && myArr.length > 4){
+                const res = myArr.splice(index,1)
+                if(res.length > 0){
+                    this.setState({
+                        myArr:myArr,
+                        rows:this.state.rows-1
+                    });
+                }
+
+                const {longestRow,longestCol} = this.findLongest();
+                this.setState({
+                    longestRow:longestRow.length,
+                    longestCol:longestCol.length
+                })
+                this.countImages()
+            }
+        }
+
+        if(colRegex.test(id)){
+            let index = -1;
+            for(let i=0;i<myArr.length;i++){
+                if(index !== -1) break;
+                for(let j=0;j<myArr[0].length;j++){
+                    if(myArr[i][j].name === "label" && myArr[i][j].id===id){
+                        index = j;
+                        break;
+                    }
+                }
+            }
+            if(index > 0  && myArr[0].length > 4){
+                for(let i=0;i<myArr.length;i++){
+                    myArr[i].splice(index,1)
+                }
+                this.setState({
+                    myArr:myArr,
+                    cols:this.state.cols-1
+                });
+
+                const {longestRow,longestCol} = this.findLongest();
+                this.setState({
+                    longestRow:longestRow.length,
+                    longestCol:longestCol.length
+                })
+                this.countImages()
+            }
+        }
+
     }
     handleEdit(id,al){
         const temp = this.state.myArr.map((arr => {
@@ -103,6 +171,14 @@ class App extends Component{
                             </li>
                         );
                     }
+                    else if(a.name === "remove"){
+                        return (
+                            <li key={i*12.14+46}>
+                                <span className="center-item glyphicon glyphicon-remove remove-btn" onClick={this.removeRowCol.bind(this,a.id)}>
+                                </span>
+                            </li>
+                        );
+                    }
                     else{
                         return (
                             <EditableListItem key={a.id} listItem={a} onEdit={this.handleEdit.bind(this)}/>
@@ -122,7 +198,7 @@ class App extends Component{
 
         return(
             <div className="row">
-                <div className="col-sm-8">
+                <div className="col-sm-9">
                     <div id="grid-container">
                         <form onSubmit={(e)=>e.preventDefault()}>
                             <ReactCSSTransitionGroup {...transitionOptions}>
@@ -133,14 +209,14 @@ class App extends Component{
                         <button onClick={this.onAddColumn.bind(this)} className="add-col"><span className="glyphicon glyphicon-plus"/></button>
                     </div>
                 </div>
-                <div className="col-sm-4 left-border">
-                    <h3>Stats</h3>
+                <div className="col-sm-3 left-border">
+                    <h3>Summary</h3>
                     <ul>
-                        <li>Number of rows : {this.state.rows-2}</li>
-                        <li>Number of cols : {this.state.cols-2}</li>
+                        <li>Number of rows : {this.state.rows-3}</li>
+                        <li>Number of cols : {this.state.cols-3}</li>
                         <li>Number of images : {this.state.numImg}</li>
-                        <li>Longest Row : {this.state.longestRow}</li>
-                        <li>Longest Col : {this.state.longestCol}</li>
+                        <li>Longest Row Label : {this.state.longestRow}</li>
+                        <li>Longest Col Label : {this.state.longestCol}</li>
                     </ul>
                 </div>
             </div>
@@ -181,22 +257,38 @@ class App extends Component{
     }
 
     onAddRow(){
-        const {rows,cols} = this.state;
-        const temp = copyArr(this.state.myArr,create2DArray(rows+1,cols),this);
+        const myArr = this.state.myArr;
+        const newRow = createRow(this);
+        myArr.push(newRow);
+        const newRowHistory = this.state.rowHistory + 1;
+        const newRows = this.state.rows + 1;
         this.setState({
-            myArr:temp,
-            rows:rows+1,
-            cols:cols
+            myArr:myArr,
+            rowHistory:newRowHistory,
+            rows:newRows
+        });
+        const {longestRow,longestCol} = this.findLongest();
+        this.setState({
+            longestRow:longestRow.length,
+            longestCol:longestCol.length
         })
+        this.countImages()
     }
     onAddColumn(){
-        const {rows,cols} = this.state;
-        const temp = copyArr(this.state.myArr,create2DArray(rows,cols+1),this);
+        const newCol = createCol(this);
+        const newColHistory = this.state.colHistory + 1;
+        const newCols = this.state.cols + 1;
         this.setState({
-            myArr:temp,
-            rows:rows,
-            cols:cols+1
+            myArr:newCol,
+            colHistory:newColHistory,
+            cols:newCols
+        });
+        const {longestRow,longestCol} = this.findLongest();
+        this.setState({
+            longestRow:longestRow.length,
+            longestCol:longestCol.length
         })
+        this.countImages()
     }
 }
 
